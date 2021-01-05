@@ -1,39 +1,40 @@
-package com.devsuperior.dsdeliver.entities;
+package com.devsuperior.dsdeliver.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.devsuperior.dsdeliver.entities.Product;
 
-@Entity
-@Table(name="tb_product")
-public class Product implements Serializable{
+public class ProductDTO implements Serializable{
     
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
     private String description;
     private String imageUri;
 
-    public Product(){}
 
-    public Product(Long id, String name, Double price, String description, String imageUri) {
+    public ProductDTO() {
+    }
+
+    public ProductDTO(Long id, String name, Double price, String description, String imageUri) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.imageUri = imageUri;
+    }
+
+    public ProductDTO(Product entity) {
+        id = entity.getId();
+        name = entity.getName();
+        price = entity.getPrice();
+        description = entity.getDescription();
+        imageUri = entity.getImageUri();
     }
 
     public Long getId() {
@@ -76,6 +77,47 @@ public class Product implements Serializable{
         this.imageUri = imageUri;
     }
 
+    public ProductDTO id(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public ProductDTO name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public ProductDTO price(Double price) {
+        this.price = price;
+        return this;
+    }
+
+    public ProductDTO description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public ProductDTO imageUri(String imageUri) {
+        this.imageUri = imageUri;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof ProductDTO)) {
+            return false;
+        }
+        ProductDTO productDTO = (ProductDTO) o;
+        return Objects.equals(id, productDTO.id) && Objects.equals(name, productDTO.name) && Objects.equals(price, productDTO.price) && Objects.equals(description, productDTO.description) && Objects.equals(imageUri, productDTO.imageUri);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, description, imageUri);
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -87,46 +129,4 @@ public class Product implements Serializable{
             "}";
     }
 
-
-    public Product id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Product name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Product price(Double price) {
-        this.price = price;
-        return this;
-    }
-
-    public Product description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Product imageUri(String imageUri) {
-        this.imageUri = imageUri;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Product)) {
-            return false;
-        }
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(description, product.description) && Objects.equals(imageUri, product.imageUri);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price, description, imageUri);
-    }
-    
 }
