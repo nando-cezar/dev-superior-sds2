@@ -1,14 +1,10 @@
-import React from 'react';
 import './App.css';
-import Footer from './Footer';
-import Home from './Home';
-import NavBar from './NavBar';
+import Routes from './Routes';
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Home />
+      <Routes />
     </>
   );
 }
