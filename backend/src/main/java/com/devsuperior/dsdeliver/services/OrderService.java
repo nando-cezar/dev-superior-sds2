@@ -2,7 +2,6 @@ package com.devsuperior.dsdeliver.services;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.devsuperior.dsdeliver.dto.OrderDTO;
