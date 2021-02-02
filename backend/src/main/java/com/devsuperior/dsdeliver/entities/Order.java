@@ -16,14 +16,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_order")
-public class Order implements Serializable{
+@Table(name = "tb_order")
+public class Order implements Serializable {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,13 +34,8 @@ public class Order implements Serializable{
     private OrderStatus status;
 
     @ManyToMany
-    @JoinTable(
-        name="tb_order_product",
-        joinColumns = @JoinColumn(name="order_id"),
-        inverseJoinColumns = @JoinColumn(name="product_id")
-    )
+    @JoinTable(name = "tb_order_product", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products = new HashSet<>();
-
 
     public Order() {
     }
@@ -102,6 +97,14 @@ public class Order implements Serializable{
         this.status = status;
     }
 
+    public Double getTotal() {
+        double sum = 0.0;
+        for (Product p : products) {
+            sum += p.getPrice();
+        }
+        return sum;
+    }
+
     public Set<Product> getProducts() {
         return this.products;
     }
@@ -149,7 +152,10 @@ public class Order implements Serializable{
             return false;
         }
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(address, order.address) && Objects.equals(latitude, order.latitude) && Objects.equals(longitude, order.longitude) && Objects.equals(moment, order.moment) && Objects.equals(status, order.status) && Objects.equals(products, order.products);
+        return Objects.equals(id, order.id) && Objects.equals(address, order.address)
+                && Objects.equals(latitude, order.latitude) && Objects.equals(longitude, order.longitude)
+                && Objects.equals(moment, order.moment) && Objects.equals(status, order.status)
+                && Objects.equals(products, order.products);
     }
 
     @Override
@@ -159,15 +165,9 @@ public class Order implements Serializable{
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", latitude='" + getLatitude() + "'" +
-            ", longitude='" + getLongitude() + "'" +
-            ", moment='" + getMoment() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", products='" + getProducts() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", address='" + getAddress() + "'" + ", latitude='" + getLatitude() + "'"
+                + ", longitude='" + getLongitude() + "'" + ", moment='" + getMoment() + "'" + ", status='" + getStatus()
+                + "'" + ", products='" + getProducts() + "'" + "}";
     }
 
 }

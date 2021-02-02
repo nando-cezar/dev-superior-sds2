@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import com.devsuperior.dsdeliver.entities.Order;
 import com.devsuperior.dsdeliver.entities.OrderStatus;
 
-public class OrderDTO implements Serializable{
-    
+public class OrderDTO implements Serializable {
+
     /**
      *
      */
@@ -22,21 +22,22 @@ public class OrderDTO implements Serializable{
     private Double longitude;
     private Instant moment;
     private OrderStatus status;
+    private Double total;
 
     private List<ProductDTO> products = new ArrayList<>();
-
 
     public OrderDTO() {
     }
 
-
-    public OrderDTO(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status) {
+    public OrderDTO(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status,
+            Double total) {
         this.id = id;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.moment = moment;
         this.status = status;
+        this.total = total;
     }
 
     public OrderDTO(Order entity) {
@@ -46,10 +47,8 @@ public class OrderDTO implements Serializable{
         this.longitude = entity.getLongitude();
         this.moment = entity.getMoment();
         this.status = entity.getStatus();
-        this.products = entity.getProducts().stream().map
-        (
-            x -> new ProductDTO(x)
-        ).collect(Collectors.toList());
+        this.total = entity.getTotal();
+        this.products = entity.getProducts().stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -100,6 +99,14 @@ public class OrderDTO implements Serializable{
         this.status = status;
     }
 
+    public Double getTotal() {
+        return this.total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
     public List<ProductDTO> getProducts() {
         return this.products;
     }
@@ -142,7 +149,9 @@ public class OrderDTO implements Serializable{
             return false;
         }
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(address, orderDTO.address) && Objects.equals(latitude, orderDTO.latitude) && Objects.equals(longitude, orderDTO.longitude) && Objects.equals(moment, orderDTO.moment) && Objects.equals(status, orderDTO.status);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(address, orderDTO.address)
+                && Objects.equals(latitude, orderDTO.latitude) && Objects.equals(longitude, orderDTO.longitude)
+                && Objects.equals(moment, orderDTO.moment) && Objects.equals(status, orderDTO.status);
     }
 
     @Override
@@ -152,14 +161,9 @@ public class OrderDTO implements Serializable{
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", latitude='" + getLatitude() + "'" +
-            ", longitude='" + getLongitude() + "'" +
-            ", moment='" + getMoment() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", address='" + getAddress() + "'" + ", latitude='" + getLatitude() + "'"
+                + ", longitude='" + getLongitude() + "'" + ", moment='" + getMoment() + "'" + ", status='" + getStatus()
+                + "'" + "}";
     }
-    
+
 }
